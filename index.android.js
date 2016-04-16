@@ -34,11 +34,6 @@ class onceApp extends Component {
         <Text style={styles.instructions}>
           Shake or press menu button for dev menu
         </Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
       </View>
     );
   }
