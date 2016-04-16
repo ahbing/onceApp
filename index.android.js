@@ -9,18 +9,44 @@ import React, {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  DeviceEventEmitter,
+  NativeModules
 } from 'react-native';
 
 import './UserAgent';
 
 import io from 'socket.io-client/socket.io';
 
+// 安卓消息通知接口
+var Notification = require('./message.js');
+
+// 封装的 原生模块
+
+NativeModules.Ibeacon.BlueToothEnable();
+
+NativeModules.Ibeacon.IbInit('aa',res => {
+  // 接收  ibeacon 信息
+  DeviceEventEmitter.addListener("IbeaconInfo",(e)=>{
+    console.log("iBeacon信息：",e);
+  });
+})
+
+Notification.create({ subject: 'Hey', message: 'Yo! Hello world.' });
+
+NativeModules.Ibeacon.MySensorInit(res => {
+  // 接收  磁仰角 方位角 信息
+  DeviceEventEmitter.addListener("SensorInfo",(e)=>{
+    console.log("磁仰角等：",e);
+  });
+})
 
 class onceApp extends Component {
   constructor(props){
     super(props);
-    this.socket = io('localhost:3001', {jspon: false});
+    // this.socket = io('localhost:3001', {jspon: false});
+  }
+  componentDidMount() {
   }
   render() {
     return (

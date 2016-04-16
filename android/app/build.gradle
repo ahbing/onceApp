@@ -120,7 +120,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.facebook.react:react-native:+'
+    // From node_modules
+    compile files('src/main/res/libs/android-async-http-1.4.6.jar')
+    compile files('src/main/res/libs/greendao-1.3.7.jar')
+    compile files('src/main/res/libs/js.jar')
+    compile files('src/main/res/libs/gson-2.3.1.jar')
+    compile files('src/main/res/libs/sensoro-scanner-1.0.1.jar')
+    compile files('src/main/res/libs/sensorobeaconkit-4.1.1.jar')
+    compile files('src/main/res/libs/sensorocloud-4.1.1.jar')
+    compile 'com.google.android.gms:play-services-gcm:8.1.0+'
 }
