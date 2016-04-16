@@ -8,6 +8,8 @@
   "dependencies": {
     "react": "^0.14.8",
     "react-native": "^0.23.1",
+    "react-native-art-svg": "^1.1.1",
+    "react-native-system-notification": "^0.1.9",
     "socket.io-client": "^1.4.5"
   }
 }
