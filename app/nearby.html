@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content = "width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no" />
+    <title>canvas</title>
+</head>
+<body>
+<img id="img" src="" alt="">
+<script>
+    var nearby = document.createElement('canvas');
+    var oImg = document.getElementById('img')
+    nearby.width = nearby.height = document.documentElement.clientWidth;
+    oImg.style.width = oImg.style.height= 300+'px';
+    var GameObject = function(x,y,r) {
+        this.r = r || 8;
+        this.x = x
+        this.y = y
+    };
+    var ctx = nearby.getContext('2d');
+
+    GameObject.prototype.draw = function() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fillStyle = "green";
+        ctx.fill();
+    };
+    var data = [{
+        x:20,
+        y:50
+    },{
+        x:50,
+        y:90
+    },{
+        x:30,
+        y:40
+    },{
+        x:22,
+        y:80
+    }];
+    data.forEach(function(item, index){
+        var hi = new GameObject(item.x, item.y);
+        hi.draw();
+    });
+
+    oImg.src = nearby.toDataURL();
+</script>
+</body>
+</html>
