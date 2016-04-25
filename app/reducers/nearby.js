@@ -1,23 +1,43 @@
-import {SHOW_NEARBY} from '../constant';
+import {REQUEST_NEARBY, RECEIVE_NEARBY, INVALIDATE_NEARBY} from '../constant';
 
-const initialState = {
-  users:[
-    { x:11, y:11 , id:1},
-    { x:22, y:22, id:22},
-  ]
-};
-
-
-
-const nearbyReducer = (state = initialState, action = {}) => {
-  switch (action.type){
-    case SHOW_NEARBY:
-      return Object.assign({}, {...state}, {
-        users: action.data
+const nearby = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  users: []
+}, action) => {
+  switch (action.type) {
+    case INVALIDATE_NEARBY:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      });
+    case REQUEST_NEARBY:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: true
+      });
+    case RECEIVE_NEARBY:
+      return Object.assign({}, state , {
+        isFetching: false,
+        didInvalidate: false,
+        receivedAt: action.receivedAt,
+        users: action.users
       });
     default:
       return state;
   }
 };
 
-export default nearbyReducer;
+function usersByUserId(state={}, action) {
+  switch(action.type){
+    case INVALIDATE_NEARBY:
+    case REQUEST_NEARBY:
+    case RECEIVE_NEARBY:
+      return Object.assign({}, state, {
+        [action.userId]: nearby(state[action.userId], action)
+      })
+    default:
+      return state;
+  }
+}
+
+export default usersByUserId;

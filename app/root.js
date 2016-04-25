@@ -1,29 +1,21 @@
 import React, {
   AppRegistry,
   Component,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
   DeviceEventEmitter,
   NativeModules
 } from 'react-native';
 
 
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-
-import rootReducer from './reducers';
 
 import App from './containers/App';
 
 import './userAgent';
 import io from 'socket.io-client/socket.io';
 
-const createStoreWithMW = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMW(rootReducer);
+import configureStore from './store/configureStore';
 
+const store = configureStore();
 //// 安卓消息通知接口
 //const Notification = require('./message.js');
 //
@@ -48,9 +40,6 @@ const store = createStoreWithMW(rootReducer);
 
 
 class Root extends Component{
-  constructor(props){
-    super(props);
-  }
   render(){
     return(
       <Provider store={store}>

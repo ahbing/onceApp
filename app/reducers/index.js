@@ -1,16 +1,16 @@
 // import all reducer and combine Reducers
 
-import nearby from './nearby';
+import usersByUserId from './nearby';
 import room from './room';
-import rooms from './rooms';
+import roomsByUserId from './rooms';
 import common from './common';
 
 import {combineReducers} from 'redux';
 
 const rootReducers = combineReducers({
-  nearby,
+  usersByUserId,
   room,
-  rooms,
+  roomsByUserId,
   common
 });
 

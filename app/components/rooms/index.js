@@ -8,9 +8,9 @@ import React, {
 } from 'react-native';
 
 
-import myRoom from '../room';
+import Room from '../room';
 
-class myRooms extends React.Component{
+class Rooms extends React.Component{
   constructor(props) {
     super(props);
     //this._handlePress = this._handlePress.bind(this);
@@ -26,11 +26,10 @@ class myRooms extends React.Component{
   _handlePress(roomId){
     const {navigator} = this.props;
     navigator.push(Object.assign({}, {
-      name: 'myRoom',
-      component: myRoom,
+      name: 'Room',
+      component: Room,
       roomId
     }));
-    console.log(roomId);
   }
   //const REQUEST_URL = '';
   componentDidMount() {
@@ -120,4 +119,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default myRooms;
+export default Rooms;

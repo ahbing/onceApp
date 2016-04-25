@@ -6,28 +6,49 @@ import React,{
   TouchableHighlight
 } from 'react-native';
 
+import NearbyContainer from '../../containers/NearbyContainer';
+import RoomsContainer from '../../containers/RoomsContainer';
 
 class BottomBar extends Component{
-  constructor(){
-    super();
-    this._pressButton = this._pressButton.bind(this)
+  constructor(props){
+    super(props);
   }
-  _pressButton(tab){
-    const {actions} = this.props;
-    actions.changeTab(tab);
+  handlePress(target) {
+    const {navigator, dispatch} = this.props;
+    const currentRoutes = navigator.getCurrentRoutes();
+    console.log('old',currentRoutes);
+    // switch (target) {
+    //   case 'near':
+    //     newRoute = {
+    //       component:NearbyContainer,
+    //       name:'NearbyContainer'
+    //     }
+    //   break;
+    //   case 'list' :
+    //     newRoute = {
+    //       component:RoomsContainer,
+    //       name:'RoomsContainer'
+    //     }
+    //   break;
+    // }
+    navigator.push({
+      component:RoomsContainer,
+      name:'RoomsContainer'
+    });
+    console.log('new',currentRoutes);
   }
   render(){
     return (
       <View style={styles.flexContainer}>
         <View style={styles.cell}>
-          <TouchableHighlight onPress={this._pressButton('nearby')}>
+          <TouchableHighlight onPress={this.handlePress.bind(this,'near')}>
             <Text style={styles.text}>
               附近的人
             </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.cell}>
-          <TouchableHighlight onPress={this._pressButton('rooms')}>
+          <TouchableHighlight onPress={this.handlePress.bind(this, 'list')}>
             <Text style={styles.text}>
               聊天列表
             </Text>

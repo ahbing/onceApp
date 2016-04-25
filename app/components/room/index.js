@@ -3,17 +3,17 @@ import React, {
   Text,
 } from 'react-native';
 
-class myRoom extends React.Component{
+class Room extends React.Component{
   constructor(props){
     super(props);
   }
   render(){
     return(
       <View>
-        <Text>hello myRoom</Text>
+        <Text>hello Room</Text>
       </View>
     );
   }
 }
 
-export default myRoom;
+export default Room;

@@ -7,29 +7,26 @@ import React, {
 } from 'react-native';
 
 import NavigatorBar from '../tab/NavigatorBar';
-import BottomBar from '../tab/BottomBar';
-
+import UsersList from './userList';
 
 class Near extends React.Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     const {width} = Dimensions.get('window');
-
-    this.state = {
-      url: 'http://ahbing.betahouse.us/nearby.html',
-      width: width,
-      rotate:'0deg'
-    }
   }
 
   render() {
-    const {navigator} = this.props;
-
-    console.log('this.props--=-==-=-==-=-=',this.props);
+    const {navigator, isFetching, users} = this.props;
+    console.log('index user', users);
+    console.log('this.props', this.props);
     return (
       <View>
-        <Text>的撒旦撒旦</Text>
-        <BottomBar {...this.props}/>
+        {isFetching &&
+          <Text>正在加载</Text>
+        }
+        <Text>welcome</Text>
+
+        <UsersList users = {users} {...this.props}/>
       </View>
     )
   }

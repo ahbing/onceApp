@@ -1,25 +1,50 @@
-import {SHOW_ROOMS, JOIN_ROOM, RM_ROOM} from '../constant';
+import {INVALIDATE_ROOMS, REQUEST_ROOMS, RECEIVE_ROOMS} from '../constant';
 
-const initialState = {
-  //rooms:[
-  //  {roomId:0, hoster:0,user:121},
-  //  {roomId:1, hoster:1, user:231}
-  //]
-};
+//const initialState = {
+//  rooms:[
+//    {roomId:0, hoster:0,user:121},
+//    {roomId:1, hoster:1, user:231}
+//  ]
+//};
 
-const roomReducer = (state = initialState, action = {}) => {
+const rooms = (state={
+  isFetching: false,
+  didInvalidate: false,
+  rooms: []
+}, action) => {
   switch (action.type){
-    case SHOW_ROOMS:
-      return action.data;
-    case JOIN_ROOM:
-      return console.log('更新房间的 state, 并返回');
-    case RM_ROOM:
-      const roomId = action.roomId;
-      state.room.filter(item => {item.roomId !== roomId});
-      return state;
+    case INVALIDATE_ROOMS:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      });
+    case REQUEST_ROOMS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+    case RECEIVE_ROOMS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        rooms: action.rooms
+      });
     default:
       return state;
   }
 };
 
-export default roomReducer;
+const roomsByUserId = (state = {}, action) => {
+  switch (action.type) {
+    case INVALIDATE_ROOMS:
+    case REQUEST_ROOMS:
+    case RECEIVE_ROOMS:
+      return Object.assign({}, state, {
+        [action.userId]: rooms(state[action.userId], action)
+      })
+    default:
+      return state;
+  }
+}
+
+
+export default roomsByUserId;

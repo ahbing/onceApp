@@ -1,43 +1,62 @@
-import {SHOW_ROOMS, JOIN_ROOM, RM_ROOM} from '../constant';
+import {REQUEST_ROOMS, RECEIVE_ROOMS, INVALIDATE_ROOMS} from '../constant';
 
-// 相关的 data xuyao cing
-const showRooms = () => {
-  return {
-    type: SHOW_ROOMS,
-    data: [
-      {
-        roomId: 0,
-        userId: 222
-      },{
-        roomId:1,
-        userId:333
-      }
-    ]
-  }
-};
-
-const joinRoom = () => {
-  return {
-    type: ADD_ROOM,
-    data: {
-      roomId: 2,
-      userId: 666
-    }
-  }
-};
-
-const rmRoom = () => {
+const rmRoom = (roomId) => {
   return {
     type: RM_ROOM,
-    data: {
-      roomId: 1,
-      userId: 333
-    }
+    roomId
   }
 };
 
-export default {
-  showRooms,
-  joinRoom,
-  rmRoom
+function invalidateRooms(userId) {
+  return {
+    type: INVALIDATE_ROOMS,
+    userId
+  }
+}
+
+function requestRooms(userId){
+  return {
+    type: REQUEST_ROOMS,
+    userId
+  }
+}
+
+function receiveRooms(userId, rooms) {
+  return {
+    type: RECEIVE_ROOMS,
+    userId: userId,
+    rooms: rooms,
+    receiveAt: Date.now()
+  }
+}
+
+function fetchRooms(userId) {
+  return dispatch => {
+    dispatch(requestRooms(userId));
+    // return fetch(`http://apt.once.com/userId/userId/rooms`)
+    //   .then(response => response.json())
+    //   .then(json => dispatch(receiveRooms(userId, json)))
+    return dispatch(receiveRooms(1, rooms))
+  }
+}
+
+function shouldFetchRooms(state, userId) {
+  const rooms = state.roomsByUserId[userId];
+  if(!rooms){
+    return true;
+  }
+
+  if(rooms.isFetching){
+    return false;
+  }
+
+  return rooms.didInvalidate
+}
+
+export function fetchRoomsIfNeeded(userId) {
+  return (dispatch, getState) => {
+    if(shouldFetchRooms(getState(), userId)){
+      return dispatch(fetchRooms(userId))
+    }
+  }
 }

@@ -1,13 +1,6 @@
-import {CHAT_USER, SEND_MSG, GET_MSG} from '../constant';
+import {CREATE_ROOM, REQUEST_ROOM, SEND_MSG, GET_MSG, CHANGE_ROOM} from '../constant';
 
-const initialState = {
-  msg:[
-    {roomId:0, sender:0, target:1, text:'hello world'},
-    {roomId:1, sender:1, target:0, text:'goodbye world'}
-  ]
-};
-
-const chatReducer = (state = initialState, action = {}) => {
+const room = (state = {}, action) => {
   switch (action.type){
     case SEND_MSG:
       // 处理发送消息 返回更新的 state
@@ -22,4 +15,4 @@ const chatReducer = (state = initialState, action = {}) => {
 };
 
 
-export default chatReducer;
+export default room;
